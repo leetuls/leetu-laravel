@@ -28,6 +28,7 @@ class WeddingAttendeeController extends Controller
      */
     public function index()
     {
+        $data = $this->weddingAttender->getCustomData();
         $weddingAttender = $this->weddingAttender::paginate(5);
         return view('index', compact('weddingAttender'))->with('i', (request()->input('page', 1) -1) * 5);
     }
@@ -69,15 +70,10 @@ class WeddingAttendeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $attender, $id)
     {
-        $attender = $this->weddingAttender::find($id);
-        $attender->phone = $request->phone;
-        $attender->name = $request->name;
-        $attender->join_at = $request->join_at;
-        $attender->attend_date = $request->attend_date;
-        $attender->attend_key = $request->attend_key;
-        $attender->save();
+        $attender = $this->weddingAttender::find($attender);
+        $attender->update(['phone' => $request->phone]);
         return redirect()->route('wedding_attendee.index')->with('info', 'Cập nhật thành công!');
     }
 

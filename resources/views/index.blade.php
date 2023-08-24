@@ -52,6 +52,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{$weddingAttender->links('pagination::bootstrap-5')}}
             </div>
         </div>
     </div>

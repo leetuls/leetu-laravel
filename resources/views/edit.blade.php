@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <form action="{{route('wedding_attendee.update', $attender->id)}}" method="POST">
+                <form action="{{route('wedding_attendee.update', $attender, $attender->id)}}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -32,7 +32,7 @@
                             <div class="form-group">
                                 <strong>Chọn ngày tham dự</strong>
                                 <input type="date" name="attend_date" class="form-control" value="{{$attender->attend_date}}">
-                            </div>
+                        </div>
                             <div class="form-group">
                                 <strong>Mã code trong thiệp mời</strong>
                                 <input type="text" name="attend_key" class="form-control" placeholder="Nhập mã code" value="{{$attender->attend_key}}">
