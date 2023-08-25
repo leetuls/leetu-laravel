@@ -1,0 +1,48 @@
+# Docker hub:
+	leetuls
+	Lyngoctuls95@
+	
+# Run: mỗi lần chạy lênh run => tạo ra 1 container => server riêng
+	docker run -it -p 8080:80 [name image] (tag -it => chạy luôn tại cửa sô terminal)
+	docker run -d -p 8080:80 [name image] (tag -it => chạy luôn tại cửa sô terminal)
+
+# list: docker ps -a
+	list tất cả các container kể cả đang chạy lẫn stop
+	
+# Xóa 1 hoặc nhiều container: docker rm <list_container_name_or_id>
+
+# Xóa 1 hoặc nhiều images: docker rmi <list_image_id>
+
+# stop container: docker stop <list_container_name_or_id>
+	
+# Docker image có thể tự build hoặc pull từ dockerhub về
+
+# list các images trên docker:
+	docker images -a
+# start: docker start <id_container>
+
+# vào thư mục máy ảo của container: docker exec -it <name_container> bash
+
+# truyền dữ liệu từ ngoài vào 1 container: (dùng volumn)
+	docker run -d -p 8080:80 --name leetu-test-nginx -v <url local>:<url container> nginx
+	=> nếu là window phải đưa <url local> vào chuỗi ""
+	cmd: docker run -d -p 8080:80 --name leetu-test-nginx -v "D:\Project\docker-project\html":/usr/share/nginx/html nginx
+	
+# in logs container đang chạy:
+	docker logs <container_name_or_id>
+	
+# build 1 image custom dựa trên image đã có:
+	Tạo dockerfile
+	build: docker build -t <name_image>:<tag_version> <url Dockerfile>
+	
+# Đưa images đã build lên dockerhub:
+	docker tag <name_images_local> username/<name_tag_remote>:<version>
+	docker push username/<name_tag_remote>:<tag_version>
+	
+# note build Dockerfile keyword:
+	WORKDIR <url thư mục làm việc trong root chứa container>
+	
+# mỗi lần sửa đổi code, thay vì cứ phải chạy các lệnh build, run, remove container cũ đi thì sử dụng docker-compose.yml
+	docker-compose build <url dockerfile>(nếu sửa code cần build lại)
+	docker-compose up -d (build xong và run dưới dạng detact) => sẽ không tự build lại nếu sửa code
+	docker-compose down => stop container đã build = yml, remove container đã chạy luôn

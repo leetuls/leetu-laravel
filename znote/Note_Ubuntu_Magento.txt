@@ -1,0 +1,122 @@
+
+Gỡ ubuntu wsl nhiều bị lỗi "The system cannot find the path specified." khi cài lại: 
+wslconfig /u Ubuntu-20.04
+
+Magento download: https://magecomp.com/blog/how-to-download-magento-2-with-without-sample-data/
+
+Set quyền để edit đc file trên windown(trong ubuntu phải cd đến thư mục cần set quyền): chmod 777 . -R ; chown -R :www-data . ; chmod u+x bin/magento
+
+cd /var/www/html/magento
+service elasticsearch start
+service apache2 start
+service mysql start
+
+bin/magento setup:install \
+--base-url=http://localhost \
+--db-host=localhost \
+--db-name=magento243 \
+--db-user=tuln \
+--db-password=tuln \
+--admin-firstname=admin \
+--admin-lastname=admin \
+--admin-email=tuln@example.com \
+--admin-user=admin \
+--admin-password=Magento2 \
+--language=en_US \
+--currency=USD \
+--timezone=Asia/Tokyo \
+--use-rewrites=1 \
+--search-engine=elasticsearch7  \
+--elasticsearch-host=localhost  \
+--elasticsearch-port=9200												
+	
+
+các lệnh build:
+
+service elasticsearch start
+service apache2 start
+service mysql start
+
+service elasticsearch stop
+service apache2 stop
+service mysql stop
+
+php bin/magento setup:upgrade
+
+php bin/magento setup:di:compile
+
+php bin/magento setup:static-content:deploy -f	
+
+bin/magento cache:flush
+bin/magento c:c
+
+// Nếu k có quyền sql => cấp full quyền như user root:
+GRANT ALL PRIVILEGES ON magento.* TO 'tuln'@'localhost';
+FLUSH PRIVILEGES;
+
+//Lấy đường dẫn vào trang admin: bin/magento info:adminuri		
+
+//Lỗi "Failed to send the message. Please contact the administrator": bin/magento module:disable Magento_TwoFactorAuth	
+
+composer-magento: https://marketplace.magento.com/customer/accessKeys/
+
+Public Key: 078daf5a29a085b17acd87f0982e6b5a
+
+Private Key: 65b190245659d91e05293fdcc01d2552	
+
+sample-data: https://devdocs.magento.com/guides/v2.3/install-gde/install/sample-data-after-clone.html#clone-sample-repo		
+
+debug loging: bin/magento setup:config:set --enable-debug-logging=false
+
+//Bat debug theme
+php bin/magento dev:template-hints:enable
+php bin/magento cache:clean config full_page
+//Tat debug theme
+php bin/magento dev:template-hints:disable
+php bin/magento cache:clean config full_page
+
+TK-MK Git:
+leetuls
+lyngoctuls95
+
+TK-MK tenten.vn:
+leetuls
+Lyngoctuls95@		
+
+[DOC]:
+frontend: https://developer.adobe.com/commerce/frontend-core/guide/		
+
+magento basic: https://www.mageplaza.com/magento-2-module-development/
+
+get basic:
+	# ssh-keygen: lên github paste key vào SSH
+	# nếu lỗi "fatal: Authentication failed for 'https://github.com/leetuls/leetu-laravel.git/'" => run git remote set-url origin git@github.com:leetuls/leetu-laravel 
+	# copy git clone url git
+	# Create a new branch
+		git branch <branch_name>
+
+	# List all remote or local branches
+		git branch -a
+
+	# Delete a branch
+		git branch -d <branch_name>
+	# Create bracnh:
+		craete new branch and switch branches: git checkout -b [name branch]
+	# Git add: git add file1 file2 dir1 dir2 ...
+		git add --all
+		# Hoặc
+		git add -A
+		# Hoặc add [thư mục hiện tại]
+		git add .
+	# Git commit:
+	    git commit -m "comment"
+	# Git push:
+		git push -u origin [name branch]
+		
+App Script google: https://script.google.com/u/1/home/projects/1RstDmhue7RvU99RWeL7vBV2-hqWPezHw31voa1J5D2IwAGSLilH6hP8s/edit
+
+google sheet: https://docs.google.com/spreadsheets/d/1QRuHKy2oC9z57fYFfv2y5t--qYqWY6uQ9zbF2Z6yl3c/edit#gid=0
+
+https://cdn.biihappy.com/ziiweb/wedding-musics/BeautifulInWhite-ShaneFilan-524801.mp3
+
+https://script.google.com/macros/s/AKfycbyoMqKAdOJRoxCgLdGnKmmfdyigNIZTK3WiR3GM-QiWdpaDZAuaOSpoBsTswbVNCv607A/exec

@@ -1,0 +1,41 @@
+# Database - Migrations:
+	- Tạo bảng + class model tương ứng: ./vendor/bin/sail artisan make:model -make
+	- Lưu table tạo ở trên vào database: ./vendor/bin/sail artisan migrate
+	
+	- Nếu user DB không có quyền => cấp full quyền = cách truy cập vào image mýql trên docker:
+		docker-compose exec mysql bash
+		mysql -u root -p
+		GRANT ALL PRIVILEGES ON *.* TO 'sail'@'%';
+		FLUSH PRIVILEGES;
+
+# Tạo controller resource: ./vendor/bin/sail make:WeddingAttendeeController --resource
+
+
+
+# file lưu SQL: C:\Users\lyngo\AppData\Roaming\DBeaverData\workspace6\General\Scripts
+
+# Note tất cả các route đang có : ./vendor/bin/sail artisan route:list
+
+# Phân biệt các method route
+	//method GET dùng xử lý những yêu cầu lấy tài nguyên
+	Route::get($uri, $callback);
+	
+	//method POST dùng xử lý những yêu cầu tạo mới tài nguyên
+	Route::post($uri, $callback);
+	
+	//method PUT dùng xử lý những yêu cầu sửa toàn bộ tài nguyên
+	Route::put($uri, $callback);
+	
+	//method PATCH dùng xử lý những yêu cầu sửa 1 phần tài nguyên
+	Route::patch($uri, $callback);
+	
+	//method DELETE dùng xử lý những yêu cầu xóa tài nguyên
+	Route::delete($uri, $callback);
+	
+	//ví dụ như route::(match/any/group/...) mình sẽ giới thiệu ở những phần dưới đây
+	Route::options($uri, $callback);
+	Đôi khi bạn cần đăng ký một route mà phản hôì cho nhiều phương thức của route, lúc đấy ta sử dụng thương thức match() 
+	Hoặc bạn có thể gộp lại phản hồi chung cho bất kỳ phương thức nào cho 1 route bằng cách sử dụng any() :
+	
+	//route chuyển hướng
+	Route::redirect('/here', '/there');
