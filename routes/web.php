@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +20,16 @@ Route::get('/', function () {
 
 Route::get('/home', function () {
     return view('home');
+});
+
+// laravel <= 7x:
+/*Route::prefix('categories')->group(function () {
+    Route::get('/create', [
+        'as' => 'categories.create',
+        'uses' => 'CategoryController@create'
+    ]);
+});*/
+
+Route::prefix('categories')->group(function () {
+    Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');
 });
