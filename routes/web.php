@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 Route::get('/home', [StudentController::class, 'getCountStudent'])->name('home');
 
-Route::get('/student_search', [StudentController::class, 'getSearchResult'])->name('search');
+Route::get('/students_search', [StudentController::class, 'getSearchResult'])->name('search');
 
 Route::prefix('students')->group(function () {
     Route::get('/', [StudentController::class, 'index'])->name('students.index');

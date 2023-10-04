@@ -24,7 +24,7 @@ class StudentController extends Controller
     public function index()
     {
         $sudentList = $this->studentRepository->getStudentData();
-        return view('students.student', compact('sudentList'));
+        return view('students.student', compact('sudentList'))->with('i', (request()->input('page', 1) - 1) * 6);
     }
 
     /**
@@ -90,12 +90,14 @@ class StudentController extends Controller
     {
         if ($request->ajax()) {
             $condition = [
+                'student_id' => $request->get('student_id'),
                 'name' => $request->get('name'),
                 'date_of_birth' => $request->get('dateOfBirth'),
-                'class_name' => $request->get('studentClass')
+                'class_name' => $request->get('studentClass'),
+                'page' => $request->get('page')
             ];
             $sudentList = $this->studentRepository->getSearchResult($condition);
-            $returnHTML = view('students.search', compact('sudentList'))->render();
+            $returnHTML = view('students.search', compact('sudentList'))->with('i', ($condition['page'] - 1) * 6)->render();
             return response(['html' => $returnHTML]);
         }
     }
