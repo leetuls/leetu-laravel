@@ -13,6 +13,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     @yield('title')
 
     <!-- Ionicons -->
+    <link rel="icon" href="http://example.com/favicon.png">
     <link rel="stylesheet" href="{{asset('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css')}}">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="{{asset('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback')}}">

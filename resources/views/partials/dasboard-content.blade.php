@@ -7,7 +7,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3>15</h3>
 
                 <p>Giáo viên</p>
               </div>
@@ -22,7 +22,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3>20<sup style="font-size: 20px"></sup></h3>
 
                 <p>Môn Học</p>
               </div>

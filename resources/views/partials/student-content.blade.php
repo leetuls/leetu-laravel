@@ -1,10 +1,23 @@
 <!-- Main content -->
+@if(session()->has('error_message'))
+<div class="alert alert-danger" role="alert">
+  {{ session()->get('error_message') }}
+</div>
+@endif
+@if(session()->has('success_message'))
+<div class="alert alert-success" role="alert">
+  {{ session()->get('success_message') }}
+</div>
+@endif
 <div id="student-content">
   <div class="input-group">
     <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
       Chọn tìm kiếm
     </button>
     <input id="url_hidden" type="hidden" value="{{route('search')}}">
+    <input id="url_hidden_excel" type="hidden" value="{{route('students.export')}}">
+    <input id="url_hidden_pdf" type="hidden" value="{{route('students.pdf')}}">
+    <input id="token" type="hidden" value="{{csrf_token()}}">
     <div class="dropdown-menu">
       <table>
         <tr>
@@ -31,16 +44,17 @@
         <i class="fa fa-times-circle"></i>
       </button>
     </span>
-    <a href="#" class="btn btn-success float-right">Excel</a>
-    <a href="#" class="btn btn-danger float-right">Pdf</a>
+    <a id="export-excel" class="btn btn-success float-right">Excel</a>
+    <a id="export-pdf" class="btn btn-danger float-right">Pdf</a>
     <a id="add-new" class="btn btn-primary float-right">Thêm mới</a>
+    <input id="count_student" type="hidden" value="{{$studentTotal}}">
   </div>
   <div id="paging-student">
     <table id="table_search" class="table table-hover">
       {{$sudentList->links('pagination::bootstrap-5')}}
       <thead>
         <tr>
-          <th scope="col">#</th>
+          <th scope=" col">#</th>
           <th scope="col">Mã học sinh</th>
           <th scope="col">Họ tên</th>
           <th scope="col">Ngày sinh</th>
@@ -55,6 +69,7 @@
         @foreach($sudentList as $student)
         <tr>
           <td>{{++$i}}</td>
+          <input class="{{'auto_id' . $i}}" type="hidden" value="{{$student->id}}">
           <td>{{$student->student_id}}</td>
           <td>{{$student->name}}</td>
           <td>{{$student->date_of_birth}}</td>
@@ -64,7 +79,7 @@
           <td>{{$student->student_phone}}</td>
           <td>
             <form action="" method="POST">
-              <a href="#" class="btn btn-info">Sửa</a>
+              <a class="btn btn-info {{'student-edit' . $i}}">Sửa</a>
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-danger">Xóa</button>

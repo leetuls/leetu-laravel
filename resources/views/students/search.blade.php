@@ -1,9 +1,9 @@
 <div id="paging-student">
-  <table class="table table-hover">
+  <table id="table_search" class="table table-hover">
     {{$sudentList->links('pagination::bootstrap-5')}}
     <thead>
       <tr>
-        <th scope="col">#</th>
+        <th scope=" col">#</th>
         <th scope="col">Mã học sinh</th>
         <th scope="col">Họ tên</th>
         <th scope="col">Ngày sinh</th>
@@ -18,6 +18,7 @@
       @foreach($sudentList as $student)
       <tr>
         <td>{{++$i}}</td>
+        <input class="{{'auto_id' . $i}}" type="hidden" value="{{$student->id}}">
         <td>{{$student->student_id}}</td>
         <td>{{$student->name}}</td>
         <td>{{$student->date_of_birth}}</td>
@@ -27,7 +28,7 @@
         <td>{{$student->student_phone}}</td>
         <td>
           <form action="" method="POST">
-            <a href="#" class="btn btn-info">Sửa</a>
+            <a class="btn btn-info {{'student-edit' . $i}}">Sửa</a>
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger">Xóa</button>
