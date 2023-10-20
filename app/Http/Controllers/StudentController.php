@@ -99,9 +99,35 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $dataUpdate = [
+            'student' => [
+                'student_id' => $request->get('student_id'),
+                'name' => $request->get('name'),
+                'date_of_birth' => $request->get('date_of_birth'),
+                'gender' => $request->get('gender'),
+                'address' => $request->get('address'),
+                'student_phone' => $request->get('student_phone')
+            ],
+            'class_name' => $request->get('class_name'),
+            'auto_id' => $request->get('auto_id'),
+            'class_auto_id' => $request->get('class_auto_id')
+        ];
+        try {
+            if ($this->studentRepository->updateStudent($dataUpdate) !== 'exclusive') {
+                return redirect()->route('students.index')->with(
+                    'success_message',
+                    'Học sinh mã ' . $dataUpdate['student']['student_id'] . ' đã được cập nhật thành công!'
+                );
+            } else {
+                return redirect()->back()->with(
+                    'error_message',
+                    'Mã học sinh ' . $dataUpdate['student']['student_id'] . ' đã có người khác cập nhật!'
+                );
+            }
+        } catch (\Exception $e) {
+        }
     }
 
     /**

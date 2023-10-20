@@ -30,12 +30,28 @@
                 <label>Giới tính</label>
                 <div>
                     <div class="form-check form-check-inline">
+                        @if($mode == 'new')
                         <input checked="checked" class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="Nam" />
+                        @endif
+                        @if($mode == 'edit' && $studentData->gender == 'Nam')
+                        <input checked="checked" class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="Nam" />
+                        @endif
+                        @if($mode == 'edit' && $studentData->gender == 'Nữ')
+                        <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="Nam" />
+                        @endif
                         <label class="form-check-label" for="inlineRadio1">Nam</label>
                     </div>
 
                     <div class="form-check form-check-inline">
+                        @if($mode == 'new')
                         <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="Nữ" />
+                        @endif
+                        @if($mode == 'edit' && $studentData->gender == 'Nam')
+                        <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="Nữ" />
+                        @endif
+                        @if($mode == 'edit' && $studentData->gender == 'Nữ')
+                        <input checked="checked" class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="Nữ" />
+                        @endif
                         <label class="form-check-label" for="inlineRadio2">Nữ</label>
                     </div>
                 </div>
@@ -50,6 +66,8 @@
         @endif
         @if($mode == 'edit')
         <input type="submit" class="btn btn-success mt-3" value="Update" />
+        <input name="auto_id" type="hidden" value="{{$studentData->id}}">
+        <input name="class_auto_id" type="hidden" value="{{$studentData->class_auto_id}}">
         @endif
         <a href="{{route('students.index')}}" class="btn btn-dark mt-3">Quay lại</a>
     </form>

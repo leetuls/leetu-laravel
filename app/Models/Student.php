@@ -17,7 +17,8 @@ class Student extends Model
         'date_of_birth',
         'gender',
         'point_id',
-        'student_phone'
+        'student_phone',
+        'updated_at'
     ];
 
     public function getStudentData()
@@ -30,7 +31,8 @@ class Student extends Model
                 students.date_of_birth,
                 students.gender,
                 student_classes.class_name,
-                students.address, students.student_phone'
+                students.address, students.student_phone,
+                student_classes.id as class_auto_id'
             ))
             ->join('student_classes', 'students.student_id', '=', 'student_classes.student_id');
         return $selectColection->paginate(6);
@@ -68,7 +70,8 @@ class Student extends Model
             students.date_of_birth,
             students.gender,
             student_classes.class_name,
-            students.address, students.student_phone'
+            students.address, students.student_phone,
+            student_classes.id as class_auto_id'
             ))
             ->join('student_classes', 'students.student_id', '=', 'student_classes.student_id');
 
@@ -97,7 +100,7 @@ class Student extends Model
 
     public function getStudentById($studentId)
     {
-        return DB::table('students')->where('students.student_id', '=', $studentId)->exists();;
+        return DB::table('students')->where('students.student_id', '=', $studentId)->exists();
     }
 
     public function findStudentByAutoId($id)

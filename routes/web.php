@@ -29,5 +29,5 @@ Route::prefix('students')->group(function () {
     Route::post('/excel', [StudentController::class, 'exportExcel'])->name('students.export');
     Route::post('/pdf', [StudentController::class, 'exportPdf'])->name('students.pdf');
     Route::get('/edit', [StudentController::class, 'edit'])->name('students.edit');
-    Route::get('/update', [StudentController::class, 'update'])->name('students.update');
+    Route::post('/update', [StudentController::class, 'update'])->name('students.update');
 });
