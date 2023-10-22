@@ -78,11 +78,10 @@
           <td>{{$student->address}}</td>
           <td>{{$student->student_phone}}</td>
           <td>
-            <form action="" method="POST">
+            <form action="{{route('students.delete', ['auto_id' => $student->id, 'class_auto_id' => $student->class_auto_id, 'student_id' => $student->student_id])}}" method="POST">
               <a class="btn btn-info {{'student-edit' . $i}}">Sửa</a>
               @csrf
-              @method('DELETE')
-              <button type="submit" class="btn btn-danger">Xóa</button>
+              <button type="submit" class="btn btn-danger {{'student-delete' . $i}}">Xóa</button>
             </form>
           </td>
         </tr>

@@ -133,9 +133,24 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        try {
+            if (
+                $this->studentRepository->studentDelete(
+                    [
+                        'auto_id' => $request->get('auto_id'),
+                        'class_auto_id' => $request->get('class_auto_id')
+                    ]
+                )
+            ) {
+                return redirect()->route('students.index')->with(
+                    'success_message',
+                    'Học sinh mã ' . $request->get('student_id') . ' đã được xóa thành công!'
+                );
+            }
+        } catch (\Exception $e) {
+        }
     }
 
     public function getCountStudent()

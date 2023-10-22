@@ -151,4 +151,20 @@ class StudentRepository extends EloquentRepository
             throw $e;
         }
     }
+
+    public function studentDelete($dataRemove)
+    {
+        DB::beginTransaction();
+        try {
+            $studentClassRepository = new StudentClassRepository();
+            $this->delete($dataRemove['auto_id']);
+            $studentClassRepository->delete($dataRemove['class_auto_id']);
+            DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+            return false;
+        }
+    }
 }

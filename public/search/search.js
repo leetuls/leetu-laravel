@@ -50,6 +50,12 @@ function applyActionEditStudents(countStudent) {
                 }
             });
         });
+        $(document).on('click', '.student-delete' + i, function (event) {
+            let autoID = $('.auto_id' + i).val();
+            if (!confirm('Xóa học sinh này?')) {
+                event.preventDefault();
+            }
+        });
     };
 }
 
