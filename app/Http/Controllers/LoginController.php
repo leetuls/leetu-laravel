@@ -68,6 +68,11 @@ class LoginController extends Controller
         Session::flush();
         Auth::logout();
 
-        return Redirect('login');
+        return redirect()->route('admin.index');
+    }
+
+    public function showProfile()
+    {
+        return view('profile.profile');
     }
 }
