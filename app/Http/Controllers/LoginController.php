@@ -54,15 +54,6 @@ class LoginController extends Controller
         ]);
     }
 
-    public function dashboard()
-    {
-        if (Auth::check()) {
-            return view('home');
-        }
-
-        return redirect("login")->withSuccess('You are not allowed to access');
-    }
-
     public function signOut()
     {
         Session::flush();
@@ -74,5 +65,53 @@ class LoginController extends Controller
     public function showProfile()
     {
         return view('profile.profile');
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $userId = Auth::user()->id;
+        $user = User::find($userId);
+        $userUpdate = ['name' => $user->name, 'email' => $user->email];
+        if (!empty($user)) {
+            if ($request->hasFile('image_profile')) {
+                // Do something with the file
+                $file = $request->file('image_profile');
+                $fileName = $request->file('image_profile')->getClientOriginalName();
+                $file->move(public_path('//img/'), $fileName);
+                $user->image = $fileName;
+            }
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            $user->save();
+        }
+        return redirect()->route('admin.profile')->with('updated_profile', 'Cập nhật thông tin thành công!');
+    }
+
+    public function changePasswordIndex(Request $request)
+    {
+        if ($request->ajax()) {
+            $returnHTML = view('profile.re-password')->render();
+            return response(['html' => $returnHTML]);
+        }
+    }
+
+    public function changePassword(Request $request)
+    {
+        $user = User::find(Auth::user()->id);
+        if (!Hash::check($request->get('old_pw'), $user->password)) {
+            return redirect()
+                ->route('admin.profile')
+                ->with('error_changed', 'Bạn đã nhập sai mật khẩu!');
+        } else if (
+            $request->get('new_pw') !== $request->get('re_new_pw')
+        ) {
+            return redirect()
+                ->route('admin.profile')
+                ->with('error_changed', 'Xác nhận mật khẩu mới không khớp nhau!');
+        } else {
+            $user->password = Hash::make($request->get('new_pw'));
+            $user->save();
+            return redirect()->route('admin.profile')->with('updated_profile', 'Đổi mật khẩu thành công!');
+        }
     }
 }

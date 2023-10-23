@@ -17,3 +17,15 @@ $(document).ready(function () {
     let url = $("#image_hidden").val();
     $('#imagePreview').css('background-image', 'url(' + url + ')');
 });
+
+$('#re_pw').click(function () {
+    let url = $('#change_password').val();
+    $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            $('#pw_content').html(response.html);
+        }
+    });
+});

@@ -11,7 +11,11 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{asset('img/bean.jpg')}}" class="img-circle elevation-2" alt="User Image">
+          @if(!empty(Auth::user()->image))
+          <img src="{{asset('img/'. Auth::user()->image)}}" class="img-circle elevation-2" alt="User Image">
+          @else
+          <img src="{{asset('img/avatar_default.jpg')}}" class="img-circle elevation-2" alt="Avatar">
+          @endif
         </div>
         <div class="info">
           <a href="{{route('admin.profile')}}" class="d-block">{{Auth::user()->name}}</a>

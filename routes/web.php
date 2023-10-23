@@ -30,6 +30,9 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', [LoginController::class, 'customLogin'])->name('admin.login');
     Route::post('/create', [LoginController::class, 'customRegistration'])->name('admin.create');
     Route::get('/logout', [LoginController::class, 'signOut'])->name('admin.logout');
+    Route::post('/update', [LoginController::class, 'updateProfile'])->name('admin.update');
+    Route::get('/change_pw', [LoginController::class, 'changePasswordIndex'])->name('admin.change_password');
+    Route::post('/changed_pw', [LoginController::class, 'changePassword'])->name('admin.changed_pw');
 });
 
 Route::prefix('students')->middleware('auth')->group(function () {
