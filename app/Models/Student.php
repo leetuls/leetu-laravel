@@ -95,6 +95,11 @@ class Student extends Model
         if (isset($condition['class_name'])) {
             $selectColection->where('student_classes.class_name', 'like', '%' . $condition['class_name'] . '%');
         }
+        
+        if (isset($condition['gender'])) {
+            $selectColection->where('students.gender', 'like', '%' . $condition['gender'] . '%');
+        }
+
         return $selectColection;
     }
 

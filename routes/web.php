@@ -33,6 +33,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/update', [LoginController::class, 'updateProfile'])->name('admin.update');
     Route::get('/change_pw', [LoginController::class, 'changePasswordIndex'])->name('admin.change_password');
     Route::post('/changed_pw', [LoginController::class, 'changePassword'])->name('admin.changed_pw');
+    Route::post('/reset_pw', [LoginController::class, 'resetPassword'])->name('admin.reset_password');
 });
 
 Route::prefix('students')->middleware('auth')->group(function () {

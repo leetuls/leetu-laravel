@@ -32,6 +32,9 @@
         <tr>
           <th scope="col"><input class="form-control border-end-0 border rounded-pill" type="text" placeholder="Lớp" id="class-search-input"></th>
         </tr>
+        <tr>
+          <th scope="col"><input class="form-control border-end-0 border rounded-pill" type="text" placeholder="Giới tính" id="gender-search-input"></th>
+        </tr>
       </table>
     </div>&nbsp;
     <span class="input-group-append">

@@ -168,6 +168,7 @@ class StudentController extends Controller
                 'name' => $request->get('name'),
                 'date_of_birth' => $request->get('dateOfBirth'),
                 'class_name' => $request->get('studentClass'),
+                'gender' => $request->get('gender'),
                 'page' => $request->get('page')
             ];
             $sudentList = $this->studentRepository->getSearchResult($condition);
@@ -184,6 +185,7 @@ class StudentController extends Controller
                 'name' => $request->get('name'),
                 'date_of_birth' => $request->get('dateOfBirth'),
                 'class_name' => $request->get('studentClass'),
+                'gender' => $request->get('gender'),
                 'page' => $request->get('page')
             ];
             $studentExcelFile = Excel::raw(new StudentDataExport($this->studentRepository, $condition), \Maatwebsite\Excel\Excel::XLSX);
@@ -203,6 +205,7 @@ class StudentController extends Controller
                 'name' => $request->get('name'),
                 'date_of_birth' => $request->get('dateOfBirth'),
                 'class_name' => $request->get('studentClass'),
+                'gender' => $request->get('gender'),
                 'page' => $request->get('page')
             ];
             $sudentList = $this->studentRepository->getDataExport($condition);

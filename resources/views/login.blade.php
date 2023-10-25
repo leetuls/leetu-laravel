@@ -31,6 +31,16 @@
             @endif
             <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Đăng nhập</button>
             <a href="#" id="forgot_pswd">Quên mật khẩu?</a>
+            @if(session()->has('reset_success'))
+            <div class="alert alert-info" role="alert">
+                {{ session()->get('reset_success') }}
+            </div>
+            @endif
+            @if(session()->has('reset_error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session()->get('reset_error') }}
+            </div>
+            @endif
             <hr>
             <!-- <p>Don't have an account!</p>  -->
             <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fas fa-user-plus"></i> Tạo mới tài khoản</button>
@@ -41,8 +51,9 @@
             @endif
         </form>
 
-        <form action="/reset/password/" class="form-reset">
-            <input type="email" id="resetEmail" class="form-control" placeholder="Địa chỉ email" required="" autofocus="">
+        <form action="{{route('admin.reset_password')}}" class="form-reset" method="POST">
+            @csrf
+            <input name="email_reset" type="email" id="resetEmail" class="form-control" placeholder="Địa chỉ email" required="" autofocus="">
             <button class="btn btn-primary btn-block" type="submit">Thiết định lại mật khẩu</button>
             <a href="#" id="cancel_reset"><i class="fas fa-angle-left"></i> Quay lại</a>
         </form>

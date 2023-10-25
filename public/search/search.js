@@ -9,6 +9,7 @@ $('#clear-search').click(function () {
     $('#date-search-input').attr('type', 'text');
     $('#class-search-input').val('');
     $('#student-id-input').val('');
+    $('#gender-search-input').val('');
 });
 
 $('#date-search-input').focus(function () {
@@ -118,12 +119,14 @@ function _prepareDataInput(page) {
     let dateOfBirth = $('#date-search-input').val();
     let studentClass = $('#class-search-input').val();
     let studentId = $('#student-id-input').val();
+    let gender =  $('#gender-search-input').val();
     let token = $('#token').val();
     data = {
         'student_id': studentId,
         'name': name,
         'dateOfBirth': dateOfBirth,
         'studentClass': studentClass,
+        'gender': gender,
         'page': page,
         '_token': token
     };

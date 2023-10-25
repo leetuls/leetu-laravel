@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ResetPasswordMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class LoginController extends Controller
 {
@@ -71,7 +73,6 @@ class LoginController extends Controller
     {
         $userId = Auth::user()->id;
         $user = User::find($userId);
-        $userUpdate = ['name' => $user->name, 'email' => $user->email];
         if (!empty($user)) {
             if ($request->hasFile('image_profile')) {
                 // Do something with the file
@@ -112,6 +113,21 @@ class LoginController extends Controller
             $user->password = Hash::make($request->get('new_pw'));
             $user->save();
             return redirect()->route('admin.profile')->with('updated_profile', 'Đổi mật khẩu thành công!');
+        }
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $email  = $request->get('email_reset');
+        $user = User::where('email', $email)->first();
+        if (!empty($user)) {
+            $password = uniqid();
+            $user->password = Hash::make($password);
+            Mail::to($email)->send(new ResetPasswordMail($password));
+            $user->save();
+            return redirect()->route('admin.index')->with('reset_success', 'Đã yêu cầu thiết định lại mật khẩu, hệ thống sẽ gửi mã đến email đăng kí của bạn trong giây lát!');
+        } else {
+            return redirect()->route('admin.index')->with('reset_error', 'Email chưa được đăng kí!');
         }
     }
 }
