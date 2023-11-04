@@ -153,13 +153,6 @@ class StudentController extends Controller
         }
     }
 
-    public function getCountStudent()
-    {
-        $sudentList = $this->studentRepository->getCountStudents();
-        $studentTotal = $sudentList[0]->count_student;
-        return view('home', compact('studentTotal'));
-    }
-
     public function getSearchResult(Request $request)
     {
         if ($request->ajax()) {

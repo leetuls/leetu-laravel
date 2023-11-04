@@ -44,7 +44,7 @@
                                         </h1>
                                         <span style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                         <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
-                                            Mật khẩu mới của bạn là {{$new_password}} . Hãy ghi nhớ và đổi lại mật khẩu sau khi nhận được mail này
+                                            Mật khẩu mới của bạn là <b>{{$new_password}}</b> . Hãy ghi nhớ và đổi lại mật khẩu sau khi nhận được mail này!
                                         </p>
                                         <a href="{{route('admin.index')}}" style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">
                                             Đăng nhập

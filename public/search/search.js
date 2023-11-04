@@ -16,12 +16,14 @@ $('#date-search-input').focus(function () {
     $('#date-search-input').attr('type', 'date');
 });
 
-$(document).on('click', '.page-link', function (event) {
-    event.preventDefault();
-    let page = $(this).attr('href').split('page=')[1];
-    let url = $('#url_hidden').val();
-    studentSearchResult(page, url, 'GET', 'search');
-});
+if (window.location.href.includes("/students")) {
+    $(document).on('click', '.page-link', function (event) {
+        event.preventDefault();
+        let page = $(this).attr('href').split('page=')[1];
+        let url = $('#url_hidden').val();
+        studentSearchResult(page, url, 'GET', 'search');
+    });
+}
 
 $('#add-new').click(function () {
     $.ajax({
@@ -30,6 +32,11 @@ $('#add-new').click(function () {
         dataType: 'json',
         success: function (data) {
             $('#student-content').html(data.html);
+        },
+        error: function (data) {
+            if (data.status == '403') {
+                alert('Bạn không có quyền thao tác này!');
+            }
         }
     });
 });
@@ -48,6 +55,11 @@ function applyActionEditStudents(countStudent) {
                 dataType: 'json',
                 success: function (data) {
                     $('#student-content').html(data.html);
+                },
+                error: function (data) {
+                    if (data.status == '403') {
+                        alert('Bạn không có quyền thao tác này!');
+                    }
                 }
             });
         });
@@ -89,6 +101,11 @@ function studentSearchResult(page = "", url, method, type) {
                 a.click();
                 a.remove();
             }
+        },
+        error: function (data) {
+            if (data.status == '403') {
+                alert('Bạn không có quyền thao tác này!');
+            }
         }
     });
 }
@@ -109,6 +126,11 @@ function exportPdf(page = "", url, method) {
             a.download = 'students.pdf';
             a.click();
             a.remove();
+        },
+        error: function (data) {
+            if (data.status == '403') {
+                alert('Bạn không có quyền thao tác này!');
+            }
         }
     });
 }
@@ -119,7 +141,7 @@ function _prepareDataInput(page) {
     let dateOfBirth = $('#date-search-input').val();
     let studentClass = $('#class-search-input').val();
     let studentId = $('#student-id-input').val();
-    let gender =  $('#gender-search-input').val();
+    let gender = $('#gender-search-input').val();
     let token = $('#token').val();
     data = {
         'student_id': studentId,

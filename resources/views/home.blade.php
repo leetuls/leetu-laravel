@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-<title>Quản lý học sinh</title>
+<title>Dasboard</title>
 @endsection
 
 @section('content')

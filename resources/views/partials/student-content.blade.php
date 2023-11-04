@@ -57,7 +57,7 @@
       {{$sudentList->links('pagination::bootstrap-5')}}
       <thead>
         <tr>
-          <th scope=" col">#</th>
+          <th scope="col">#</th>
           <th scope="col">Mã học sinh</th>
           <th scope="col">Họ tên</th>
           <th scope="col">Ngày sinh</th>
