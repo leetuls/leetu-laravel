@@ -7,6 +7,8 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\DasboardController;
+use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\FacebookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +43,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/change_pw', [LoginController::class, 'changePasswordIndex'])->name('admin.change_password');
     Route::post('/changed_pw', [LoginController::class, 'changePassword'])->name('admin.changed_pw');
     Route::post('/reset_pw', [LoginController::class, 'resetPassword'])->name('admin.reset_password');
+    Route::get('/google', [GoogleController::class, 'signInwithGoogle'])->name('admin.google');
+    Route::get('/callback_gg', [GoogleController::class, 'callbackToGoogle'])->name('admin.callback_gg');
+    Route::get('/facebook', [FacebookController::class, 'signInwithFacebook'])->name('admin.facebook');
+    Route::get('/callback_fb', [FacebookController::class, 'callbackToFacebook'])->name('admin.callback_fb');
 });
 
 Route::group(['middleware' => ['auth', 'permission']], function () {

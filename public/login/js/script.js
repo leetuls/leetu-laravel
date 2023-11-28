@@ -17,3 +17,41 @@ $(() => {
     $('#logreg-forms #btn-signup').click(toggleSignUp);
     $('#logreg-forms #cancel_signup').click(toggleSignUp);
 });
+
+$('.google-btn').click(function () {
+    let url = $('#google_url').val();
+    $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            window.location.replace(data);
+        },
+        error: function (data) {
+            if (data.status == '403') {
+                alert('Bạn không có quyền thao tác này!');
+            }
+        }
+    });
+});
+
+$('.facebook-btn').click(function () {
+    let url = $('#facebook_url').val();
+    $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            window.location.replace(data);
+        },
+        error: function (data) {
+            if (data.status == '403') {
+                alert('Bạn không có quyền thao tác này!');
+            }
+        }
+    });
+});
+
+$('.form-signin').on("submit", function (event, FormData) {
+
+});

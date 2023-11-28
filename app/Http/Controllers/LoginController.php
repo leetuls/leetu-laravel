@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
 
 class LoginController extends Controller
 {
@@ -22,6 +23,7 @@ class LoginController extends Controller
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
+            $password = Crypt::encrypt($request->get('password'));
             return redirect()->intended('home')
                 ->withSuccess('Signed in');
         }
@@ -42,9 +44,10 @@ class LoginController extends Controller
         }
 
         $data = $request->all();
-        $this->_create($data);
+        $user = $this->_create($data);
+        Auth::login($user);
 
-        return redirect("home")->withSuccess('You have signed-in');
+        return redirect()->route('home');
     }
 
     private function _create(array $data)

@@ -19,6 +19,8 @@
             <div class="social-login">
                 <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span> </button>
                 <button class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Sign in with Google+</span> </button>
+                <input id="google_url" type="hidden" value="{{route('admin.google')}}">
+                <input id="facebook_url" type="hidden" value="{{route('admin.facebook')}}">
             </div>
             <p style="text-align:center"> HOẶC </p>
             <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Địa chỉ email" required="" autofocus="">
