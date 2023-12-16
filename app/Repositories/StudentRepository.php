@@ -121,7 +121,7 @@ class StudentRepository extends EloquentRepository
                 }
                 $studentDataObj = [
                     'student_id' => $dataUpdate['student']['student_id'],
-                    'student_name' => $dataUpdate['student']['name'],
+                    'name' => $dataUpdate['student']['name'],
                     'address' => $dataUpdate['student']['address'],
                     'date_of_birth' => $dataUpdate['student']['date_of_birth'],
                     'gender' => $dataUpdate['student']['gender'],
