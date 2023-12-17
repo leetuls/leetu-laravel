@@ -2,8 +2,8 @@ import './bootstrap';
 
 import {createApp} from 'vue';
 
-import App from './App.vue';
+import Hello from './Hello.vue';
 
-const app = createApp(App);
+const app = createApp(Hello);
 
 app.mount('#hello-vue');
