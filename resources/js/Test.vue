@@ -1,13 +1,18 @@
 <template>
     My name is Test!
 
-    <div id="app" :color="color">
-        <button @click="increment">
-            Count is: {{ count }}
-        </button>
-        <button @click="helloVue">
-            Click Me!
-        </button>
+    <div id="app1">
+        <span>{{ testClickStopParent }}</span>
+        <div id="app" :color="color">
+            <span>{{ testClickStopChilrent }}</span>
+            <button @click="increment">
+                Count is: {{ count }}
+            </button>
+            <button @click="helloVue">
+                Click Me!
+            </button>
+            <button @click.stop="onClick">Click me</button>
+        </div>
     </div>
 </template>
 
@@ -31,6 +36,10 @@ export default defineComponent({
     setup() {
         const count = ref(0);
 
+        const testClickStopParent = ref('this is a parent component!');
+
+        const testClickStopChilrent = ref('this is a chilrent component!');
+
         const increment = () => {
             count.value++;
         };
@@ -39,7 +48,13 @@ export default defineComponent({
             alert('Hello Vue!');
         }
 
-        return { count, increment, helloVue };
+        const onClick = () => {
+            testClickStopParent.value = 'changed!';
+            testClickStopChilrent.value = 'Chilrent changed!';
+            alert('click stop!');
+        };
+
+        return { count, increment, helloVue, onClick, testClickStopParent, testClickStopChilrent };
     },
     props: {
         color: 'green'
