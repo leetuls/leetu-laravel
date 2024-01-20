@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use Illuminate\Database\Eloquent\Model;
+
 interface EloquentRepositoryInterface
 {
     /**
@@ -38,4 +40,12 @@ interface EloquentRepositoryInterface
      * @return mixed
      */
     public function delete($id);
+
+    /**
+     * get first data by condition
+     *
+     * @param [type] ...$params
+     * @return Model|null
+     */
+    public function getFirstWhere(...$params);
 }

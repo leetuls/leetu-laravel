@@ -2,12 +2,12 @@
 
 namespace App\Repositories;
 
-use App\Repositories\EloquentRepositoryInterface;
+use Illuminate\Database\Eloquent\Model;
 
 abstract class EloquentRepository implements EloquentRepositoryInterface
 {
     /**
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var Model
      */
     protected $_model;
 
@@ -101,5 +101,16 @@ abstract class EloquentRepository implements EloquentRepositoryInterface
         }
 
         return false;
+    }
+
+    /**
+     * get first data by condition
+     *
+     * @param [type] ...$params
+     * @return Model|null
+     */
+    public function getFirstWhere(...$params): ?Model
+    {
+        return $this->_model->firstWhere(...$params);
     }
 }

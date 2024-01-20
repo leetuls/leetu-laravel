@@ -2,10 +2,8 @@
 
 namespace App\Repositories\User;
 
-interface UserRepositoryInterface
+use App\Repositories\EloquentRepositoryInterface;
+
+interface UserRepositoryInterface extends EloquentRepositoryInterface
 {
-    /**
-     * get user by id
-     */
-    public function getUserById($userId);
 }

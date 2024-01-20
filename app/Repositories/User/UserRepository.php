@@ -17,11 +17,4 @@ class UserRepository extends EloquentRepository implements UserRepositoryInterfa
     {
         return User::class;
     }
-
-    /**
-     * get user by id
-     */
-    public function getUserById($userId)
-    {
-    }
 }
