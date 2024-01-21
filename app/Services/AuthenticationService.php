@@ -54,4 +54,15 @@ class AuthenticationService
 
         return $this->tokenManager->createCompositionToken($user);
     }
+
+    /**
+     * Undocumented function
+     *
+     * @param string $token
+     * @return void
+     */
+    public function logout(string $token)
+    {
+        $this->tokenManager->deleteTokenByPlainTextToken($token);
+    }
 }

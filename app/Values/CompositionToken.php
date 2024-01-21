@@ -5,6 +5,7 @@ namespace App\Values;
 use Illuminate\Contracts\Support\Arrayable;
 use Laravel\Sanctum\NewAccessToken;
 use Laravel\Sanctum\PersonalAccessToken;
+use App\Models\User;
 
 final class CompositionToken implements Arrayable
 {
@@ -15,8 +16,11 @@ final class CompositionToken implements Arrayable
      * @param string $apiToken
      * @param string $expiresAt
      */
-    public function __construct(private string $apiToken = "", private string $expiresAt = "")
-    {
+    public function __construct(
+        private string $apiToken,
+        private string $expiresAt,
+        private $user
+    ) {
     }
 
     /**
@@ -25,9 +29,16 @@ final class CompositionToken implements Arrayable
      * @param NewAccessToken $api
      * @return CompositionToken|null
      */
-    public static function fromAccessTokens(NewAccessToken $api, PersonalAccessToken $personalAccessToken)
-    {
-        return new self((string)$api->plainTextToken, (string)$personalAccessToken->expires_at);
+    public static function fromAccessTokens(
+        NewAccessToken $api,
+        PersonalAccessToken $personalAccessToken,
+        User $user
+    ) {
+        return new self(
+            (string)$api->plainTextToken,
+            (string)$personalAccessToken->expires_at,
+            $user
+        );
     }
 
     /**
@@ -39,8 +50,14 @@ final class CompositionToken implements Arrayable
     {
         return [
             'error' => false,
-            'token' => $this->apiToken,
-            'expires_at' => $this->expiresAt
+            'user' => [
+                'name' => $this->user->name,
+                'email' => $this->user->email
+            ],
+            'authorisation' => [
+                'token' => $this->apiToken,
+                'expires_at' => $this->expiresAt
+            ]
         ];
     }
 }
