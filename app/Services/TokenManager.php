@@ -12,8 +12,10 @@ use App\Repositories\User\UserRepositoryInterface;
 class TokenManager
 {
 
-    public function __construct(private CompositionToken $compositionToken, private UserRepositoryInterface $userRepository)
-    {
+    public function __construct(
+        private CompositionToken $compositionToken,
+        private UserRepositoryInterface $userRepository
+    ) {
     }
 
     /**

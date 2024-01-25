@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use Illuminate\Support\Facades\RateLimiter;
+use App\Http\Controllers\Apis\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,5 +22,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => ['api', 'throttle:5,1']], function () {
     Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+});
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/logout', [AuthController::class, 'logout']);
+    Route::group(['prefix' => 'category'], function () {
+        Route::get('/', [CategoryController::class, 'index']);
+        Route::post('/add', [CategoryController::class, 'store']);
+        Route::put('/edit', [CategoryController::class, 'update']);
+        Route::delete('/edit', [CategoryController::class, 'destroy']);
+    });
 });

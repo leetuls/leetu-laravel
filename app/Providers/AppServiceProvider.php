@@ -3,22 +3,34 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\User\UserRepository;
+use App\Values\CompositionToken;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Category\CategoryRepository;
+use App\Values\CategoryData;
 
 class AppServiceProvider extends ServiceProvider
 {
+    /**
+     * All of the container singletons that should be registered.
+     *
+     * @var array
+     */
+    public $singletons = [
+        UserRepositoryInterface::class => UserRepository::class,
+        CategoryRepositoryInterface::class => CategoryRepository::class,
+    ];
+
     /**
      * Register any application services.
      */
     public function register(): void
     {
         $this->app->singleton(
-            \App\Repositories\User\UserRepositoryInterface::class,
-            \App\Repositories\User\UserRepository::class
-        );
-        $this->app->singleton(
-            \App\Values\CompositionToken::class,
+            CompositionToken::class,
             function () {
-                return new \App\Values\CompositionToken('', '', null);
+                return new CompositionToken('', '', null);
             }
         );
     }
