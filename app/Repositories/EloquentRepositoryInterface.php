@@ -48,4 +48,23 @@ interface EloquentRepositoryInterface
      * @return Model|null
      */
     public function getFirstWhere(...$params);
+
+    /**
+     * Check Exist Model By Id
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function checkExistById($id);
+
+    /**
+     * Get Data From Columns
+     *
+     * @param [type] $columns: ['column1', 'column2']
+     * @param [type] $params: [$param1 => $value1, [$param2, '=|<|>|in|...', $value2], ...]
+     * @return void
+     * 
+     * Note: | is one of the separating conditions.
+     */
+    public function getColumnsData($columns, $params = []);
 }

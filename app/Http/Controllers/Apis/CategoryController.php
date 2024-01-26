@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\CategoryService;
 use App\Exceptions\CouldNotGetCategoryException;
+use App\Exceptions\CouldNotSaveCategoryException;
 
 class CategoryController extends Controller
 {
@@ -37,7 +38,18 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            return response()->json(
+                $this->categoryService->createCategory($request)
+            );
+        } catch (CouldNotSaveCategoryException $error) {
+            return response()->json(
+                [
+                    'error' => true,
+                    'message' => $error->getMessage()
+                ]
+            );
+        }
     }
 
     /**
@@ -45,7 +57,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            return response()->json(
+                $this->categoryService->updateCategory($request, $id)
+            );
+        } catch (CouldNotSaveCategoryException $error) {
+            return response()->json(
+                [
+                    'error' => true,
+                    'message' => $error->getMessage()
+                ]
+            );
+        }
     }
 
     /**
@@ -53,6 +76,34 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            return response()->json(
+                $this->categoryService->deleteCategory($id)
+            );
+        } catch (CouldNotSaveCategoryException $error) {
+            return response()->json(
+                [
+                    'error' => true,
+                    'message' => $error->getMessage()
+                ]
+            );
+        }
+    }
+
+    /**
+     * Category View Model
+     *
+     * @return void
+     */
+    public function viewModel()
+    {
+        try {
+            return response()->json($this->categoryService->getCategoryViewModel());
+        } catch (CouldNotGetCategoryException $error) {
+            return response()->json([
+                'error' => true,
+                'message' => $error->getMessage()
+            ]);
+        }
     }
 }

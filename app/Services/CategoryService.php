@@ -2,8 +2,12 @@
 
 namespace App\Services;
 
+use App\Exceptions\CouldNotGetCategoryException;
+use App\Exceptions\CouldNotSaveCategoryException;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Values\CategoryData;
+use Exception;
+use Illuminate\Support\Str;
 
 class CategoryService
 {
@@ -23,9 +27,107 @@ class CategoryService
      *
      * @return CategoryData
      */
-    public function getAllCategory() : CategoryData
+    public function getAllCategory(): CategoryData
     {
         $categoryData = $this->categoryRepository->getAll();
         return CategoryData::getAllCategory(categories: $categoryData);
+    }
+
+    /**
+     * Create Category
+     *
+     * @param [type] $request
+     * @return void
+     */
+    public function createCategory($request)
+    {
+        $categoryData = [
+            'name' => $request->category_name,
+            'parent_id' => $request->parent_id,
+            'slug' => Str::slug($request->category_name)
+        ];
+
+        try {
+            $this->categoryRepository->create($categoryData);
+            return [
+                'error' => false,
+                'message' => 'The category ' . $categoryData['name'] . ' has been added successfully!'
+            ];
+        } catch (CouldNotSaveCategoryException $error) {
+            throw $error;
+        }
+    }
+
+    /**
+     * Update Category
+     *
+     * @param [type] $request
+     * @return void
+     */
+    public function updateCategory($request, $id)
+    {
+        if (!$this->categoryRepository->checkExistById($id)) {
+            throw new Exception('Category No.' . $id . ' not found!');
+        }
+
+        $categoryUpdate = [
+            'name' => $request->category_name,
+            'parent_id' => $request->parent_id,
+            'slug' => Str::slug($request->category_name)
+        ];
+
+        try {
+            $this->categoryRepository->update($id, $categoryUpdate);
+            return [
+                'error' => false,
+                'message' => 'The category No.' . $id . ' has been updated successfully!'
+            ];
+        } catch (CouldNotSaveCategoryException $error) {
+            throw $error;
+        }
+    }
+
+    /**
+     * Delete Category
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function deleteCategory($id)
+    {
+        if (!$this->categoryRepository->checkExistById($id)) {
+            throw new Exception('Category No.' . $id . ' not found!');
+        }
+
+        try {
+            $this->categoryRepository->delete($id);
+            return [
+                'error' => false,
+                'message' => 'The category No.' . $id . ' has been deleted successfully!'
+            ];
+        } catch (CouldNotSaveCategoryException $error) {
+            throw $error;
+        }
+    }
+
+    /**
+     * Get Category View Model
+     *
+     * @return void
+     */
+    public function getCategoryViewModel()
+    {
+        try {
+            $categoryModel = $this->categoryRepository->getColumnsData(
+                ['name', 'parent_id']
+            );
+
+            return [
+                'error' => false,
+                'category_model' => $categoryModel
+            ];
+        } catch (CouldNotGetCategoryException $error) {
+            throw $error;
+        }
     }
 }

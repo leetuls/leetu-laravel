@@ -113,4 +113,29 @@ abstract class EloquentRepository implements EloquentRepositoryInterface
     {
         return $this->_model->firstWhere(...$params);
     }
+
+    /**
+     * Check Exist Model By Id
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function checkExistById($id)
+    {
+        return $this->_model->where('id', $id)->exists();
+    }
+
+    /**
+     * Get Data From Columns
+     *
+     * @param [type] $columns: ['column1', 'column2']
+     * @param [type] $params: [$param1 => $value1, [$param2, '=|<|>', $value2], ...]
+     * @return void
+     * 
+     * Note: | is one of the separating conditions.; If $params is null, then there is no condition.
+     */
+    public function getColumnsData($columns, $params = [])
+    {
+        return $this->_model->query()->select(...$columns)->where($params)->get();
+    }
 }

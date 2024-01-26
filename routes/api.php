@@ -29,7 +29,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::group(['prefix' => 'category'], function () {
         Route::get('/', [CategoryController::class, 'index']);
         Route::post('/add', [CategoryController::class, 'store']);
-        Route::put('/edit', [CategoryController::class, 'update']);
-        Route::delete('/edit', [CategoryController::class, 'destroy']);
+        Route::post('/edit/{id}', [CategoryController::class, 'update']);
+        Route::delete('/delete/{id}', [CategoryController::class, 'destroy']);
+        Route::get('/view/model', [CategoryController::class, 'viewModel']);
     });
 });
