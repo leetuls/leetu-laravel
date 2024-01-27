@@ -119,12 +119,18 @@ class CategoryService
     {
         try {
             $categoryModel = $this->categoryRepository->getColumnsData(
-                ['name', 'parent_id']
+                ['id as value', 'name as label']
+            )->toArray();
+            $categoryDataCombine = array_combine(
+                array_column($categoryModel, 'value'),
+                array_column($categoryModel, 'label')
             );
-
+            $categoryDataCombine[0] = 'Danh mục gốc';
+            $categoryModel[] = ['value' => 0, 'label' => 'Danh mục gốc'];
             return [
                 'error' => false,
-                'category_model' => $categoryModel
+                'category_model' => $categoryModel,
+                'category_combine' => $categoryDataCombine
             ];
         } catch (CouldNotGetCategoryException $error) {
             throw $error;

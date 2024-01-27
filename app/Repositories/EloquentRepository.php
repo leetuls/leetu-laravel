@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 
 abstract class EloquentRepository implements EloquentRepositoryInterface
 {
@@ -129,8 +130,8 @@ abstract class EloquentRepository implements EloquentRepositoryInterface
      * Get Data From Columns
      *
      * @param [type] $columns: ['column1', 'column2']
-     * @param [type] $params: [$param1 => $value1, [$param2, '=|<|>', $value2], ...]
-     * @return void
+     * @param [type] $params: ['column1' => $param1, ['column2', '=|<|>', $param2], ...]
+     * @return Collection
      * 
      * Note: | is one of the separating conditions.; If $params is null, then there is no condition.
      */
