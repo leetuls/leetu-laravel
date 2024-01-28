@@ -89,21 +89,4 @@ class CategoryController extends Controller
             );
         }
     }
-
-    /**
-     * Category View Model
-     *
-     * @return void
-     */
-    public function viewModel()
-    {
-        try {
-            return response()->json($this->categoryService->getCategoryViewModel());
-        } catch (CouldNotGetCategoryException $error) {
-            return response()->json([
-                'error' => true,
-                'message' => $error->getMessage()
-            ]);
-        }
-    }
 }

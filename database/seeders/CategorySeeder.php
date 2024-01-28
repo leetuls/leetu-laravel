@@ -13,7 +13,7 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 100000; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             DB::table('categories')->insert([
                 'name' => 'Category ' . $i . ' name',
                 'parent_id' => $i,
