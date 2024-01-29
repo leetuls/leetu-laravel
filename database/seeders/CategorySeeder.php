@@ -13,10 +13,10 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 11; $i < 11000; $i++) {
             DB::table('categories')->insert([
                 'name' => 'Category ' . $i . ' name',
-                'parent_id' => $i,
+                'parent_id' => 1,
                 'slug' => Str::slug('Category ' . $i . ' name')
             ]);
         }

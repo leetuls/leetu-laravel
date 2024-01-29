@@ -24,14 +24,18 @@ final class CategoryData implements Arrayable
     {
         $categoryModel = [];
         $categoryCombine = ['Không có(danh mục gốc)'];
-        foreach ($categories as $category) {
-            $categoryCombine[$category['id']] = $category['name'];
-            if ($category['parent_id'] === 0) {
-                $categoryModel[] = ['value' => $category['id'], 'label' => $category['name']];
-            } else {
-                self::getModelCategoriesTree($categoryModel, $category);
-            }
-        }
+        $categoryCombine = array_column($categories->toArray(), 'name', 'id');
+        array_unshift($categoryCombine, 'Không có(danh mục gốc)');
+        self::getModelCategoriesTree(
+            $categories,
+            $categoryModel,
+            0,
+            array_column(
+                $categories->toArray(),
+                'parent_id'
+            )
+        );
+        self::removeKeyCategoriesTree($categoryModel);
         array_unshift($categoryModel, ['value' => 0, 'label' => 'Danh mục gốc']);
         return new self($categories, $categoryModel, $categoryCombine);
     }
@@ -43,15 +47,36 @@ final class CategoryData implements Arrayable
      * @param [type] $category
      * @return void
      */
-    private static function getModelCategoriesTree(&$categoryModel, $category)
+    private static function getModelCategoriesTree($categories, &$categoryModel = [], $id, $endNote)
     {
-        foreach($categoryModel as &$model) {
-            if ($model['value'] == $category['parent_id']) {
-                $model['children'][] = ['value' => $category['id'], 'label' => $category['name']];
-            } else {
-                if (isset($model['children'])) {
-                    self::getModelCategoriesTree($model['children'], $category);
+        foreach ($categories as $category) {
+            if ($category['parent_id'] == $id) {
+                $categoryModel[$category['id']] = ['value' => $category['id'], 'label' => $category['name']];
+                if (in_array($category['id'], $endNote)) {
+                    self::getModelCategoriesTree(
+                        $categories,
+                        $categoryModel[$category['id']]['children'],
+                        $category['id'],
+                        $endNote
+                    );
                 }
+            }
+        }
+    }
+
+    /**
+     * Remove key after recursive categories tree
+     *
+     * @param [type] $categoryModel
+     * @return void
+     */
+    private static function removeKeyCategoriesTree(&$categoryModel)
+    {
+        $categoryModel = array_merge($categoryModel);
+        foreach ($categoryModel as &$model) {
+            if (isset($model['children'])) {
+                $model = array_merge($model);
+                self::removeKeyCategoriesTree($model['children']);
             }
         }
     }
