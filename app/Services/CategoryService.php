@@ -44,15 +44,19 @@ class CategoryService
         try {
             DB::beginTransaction();
             $categoryData = [
-                'name' => $request->category_name,
+                'name' => $request->name,
                 'parent_id' => $request->parent_id,
                 'slug' => Str::slug($request->category_name)
             ];
 
             $this->categoryRepository->create($categoryData);
+            $categoryOptions = $this->getAllCategory()->toArray();
             DB::commit();
             return [
                 'error' => false,
+                'categories' => $categoryOptions['categories'],
+                'categories_options' => $categoryOptions['category_model'],
+                'category_combine' => $categoryOptions['category_combine'],
                 'message' => 'The category ' . $categoryData['name'] . ' has been added successfully!'
             ];
         } catch (CouldNotSaveCategoryException $error) {
