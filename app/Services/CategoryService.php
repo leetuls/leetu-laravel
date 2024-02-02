@@ -112,9 +112,11 @@ class CategoryService
                 throw new Exception('Category No.' . $id . ' not found!');
             }
             $this->categoryRepository->delete($id);
+            $categoryOptions = $this->getAllCategory()->toArray();
             DB::commit();
             return [
                 'error' => false,
+                'categories_options' => $categoryOptions['category_model'],
                 'message' => 'The category No.' . $id . ' has been deleted successfully!'
             ];
         } catch (CouldNotSaveCategoryException $error) {
