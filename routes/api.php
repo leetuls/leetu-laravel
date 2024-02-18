@@ -25,11 +25,14 @@ Route::group(['middleware' => ['api', 'throttle:5,1']], function () {
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    // auth
     Route::delete('/logout', [AuthController::class, 'logout']);
+    // Categories
     Route::group(['prefix' => 'category'], function () {
         Route::get('/', [CategoryController::class, 'index']);
         Route::post('/add', [CategoryController::class, 'store']);
         Route::post('/edit/{id}', [CategoryController::class, 'update']);
         Route::delete('/delete/{id}', [CategoryController::class, 'destroy']);
     });
+    // Menus
 });
