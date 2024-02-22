@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
-use App\Exceptions\CouldNotSaveCategoryException;
+use App\Exceptions\Category\CouldNotSaveCategoryException;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Values\CategoryData;
 use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CategoryService
 {
@@ -36,7 +37,7 @@ class CategoryService
     /**
      * Create Category
      *
-     * @param [type] $request
+     * @param [type] $request[name: string, parent_id: int, category_name: string]
      * @return void
      */
     public function createCategory($request)
@@ -61,6 +62,7 @@ class CategoryService
             ];
         } catch (CouldNotSaveCategoryException $error) {
             DB::rollBack();
+            Log::channel('leetu_shop_history')->error($error);
             throw $error;
         }
     }
@@ -68,7 +70,7 @@ class CategoryService
     /**
      * Update Category
      *
-     * @param [type] $request
+     * @param [type] $request[parent_id: int, category_name: string]
      * @return void
      */
     public function updateCategory($request, $id)
@@ -76,6 +78,7 @@ class CategoryService
         try {
             DB::beginTransaction();
             if (!$this->categoryRepository->checkExistById($id)) {
+                Log::channel('leetu_shop_history')->error('Category No.' . $id . ' not found!');
                 throw new Exception('Category No.' . $id . ' not found!');
             }
 
@@ -94,6 +97,7 @@ class CategoryService
             ];
         } catch (CouldNotSaveCategoryException $error) {
             DB::rollBack();
+            Log::channel('leetu_shop_history')->error($error);
             throw $error;
         }
     }
@@ -109,6 +113,7 @@ class CategoryService
         try {
             DB::beginTransaction();
             if (!$this->categoryRepository->checkExistById($id)) {
+                Log::channel('leetu_shop_history')->error('Category No.' . $id . ' not found!');
                 throw new Exception('Category No.' . $id . ' not found!');
             }
             $this->categoryRepository->delete($id);
@@ -121,6 +126,7 @@ class CategoryService
             ];
         } catch (CouldNotSaveCategoryException $error) {
             DB::rollBack();
+            Log::channel('leetu_shop_history')->error($error);
             throw $error;
         }
     }

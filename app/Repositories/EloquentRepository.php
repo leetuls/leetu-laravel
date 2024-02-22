@@ -116,7 +116,7 @@ abstract class EloquentRepository implements EloquentRepositoryInterface
     }
 
     /**
-     * Check Exist Model By Id
+     * Check Exist Model By Id, true if id existed
      *
      * @param [type] $id
      * @return void
@@ -138,5 +138,16 @@ abstract class EloquentRepository implements EloquentRepositoryInterface
     public function getColumnsData($columns, $params = [])
     {
         return $this->_model->query()->select(...$columns)->where($params)->get();
+    }
+
+    /**
+     * Delete multiple record by array keys
+     *
+     * @param [Array] $ids
+     * @return void
+     */
+    public function deleteMultiple($ids)
+    {
+        return $this->_model::destroy($ids);
     }
 }

@@ -51,7 +51,7 @@ interface EloquentRepositoryInterface
     public function getFirstWhere(...$params);
 
     /**
-     * Check Exist Model By Id
+     * Check Exist Model By Id, true if id existed
      *
      * @param [type] $id
      * @return void
@@ -68,4 +68,12 @@ interface EloquentRepositoryInterface
      * Note: | is one of the separating conditions.; If $params is null, then there is no condition.
      */
     public function getColumnsData($columns, $params = []);
+
+    /**
+     * Delete multiple record by array keys
+     *
+     * @param [Array] $ids
+     * @return void
+     */
+    public function deleteMultiple($ids);
 }

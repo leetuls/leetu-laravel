@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Apis;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\CategoryService;
-use App\Exceptions\Category\CouldNotGetCategoryException;
-use App\Exceptions\Category\CouldNotSaveCategoryException;
+use App\Services\MenuService;
+use App\Exceptions\Menu\CouldNotGetMenuException;
+use App\Exceptions\Menu\CouldNotSaveMenuException;
 
-class CategoryController extends Controller
+class MenuController extends Controller
 {
-    private CategoryService $categoryService;
-
+    /**
+     * MenuController Contructor
+     */
     public function __construct(
-        CategoryService $categoryService
+        private MenuService $menuService
     ) {
-        $this->categoryService = $categoryService;
     }
 
     /**
@@ -24,8 +24,8 @@ class CategoryController extends Controller
     public function index()
     {
         try {
-            return response()->json($this->categoryService->getAllCategory()->toArray());
-        } catch (CouldNotGetCategoryException $error) {
+            return response()->json($this->menuService->getMenus()->toArray());
+        } catch (CouldNotGetMenuException $error) {
             return $this->responseError($error);
         }
     }
@@ -37,9 +37,9 @@ class CategoryController extends Controller
     {
         try {
             return response()->json(
-                $this->categoryService->createCategory($request)
+                $this->menuService->createMenu($request)
             );
-        } catch (CouldNotSaveCategoryException $error) {
+        } catch (CouldNotSaveMenuException $error) {
             return $this->responseError($error);
         }
     }
@@ -51,9 +51,9 @@ class CategoryController extends Controller
     {
         try {
             return response()->json(
-                $this->categoryService->updateCategory($request, $id)
+                $this->menuService->updateMenu($request, $id)
             );
-        } catch (CouldNotSaveCategoryException $error) {
+        } catch (CouldNotSaveMenuException $error) {
             return $this->responseError($error);
         }
     }
@@ -61,13 +61,11 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
         try {
-            return response()->json(
-                $this->categoryService->deleteCategory($id)
-            );
-        } catch (CouldNotSaveCategoryException $error) {
+            return response()->json($this->menuService->deleteMenu($request->ids));
+        } catch (CouldNotSaveMenuException $error) {
             return $this->responseError($error);
         }
     }

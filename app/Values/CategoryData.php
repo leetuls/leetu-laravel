@@ -47,7 +47,7 @@ final class CategoryData implements Arrayable
      * @param [type] $category
      * @return void
      */
-    private static function getModelCategoriesTree($categories, &$categoryModel = [], $id, $endNote)
+    public static function getModelCategoriesTree($categories, &$categoryModel = [], $id, $endNote)
     {
         foreach ($categories as $category) {
             if ($category['parent_id'] == $id) {
@@ -70,7 +70,7 @@ final class CategoryData implements Arrayable
      * @param [type] $categoryModel
      * @return void
      */
-    private static function removeKeyCategoriesTree(&$categoryModel)
+    public static function removeKeyCategoriesTree(&$categoryModel)
     {
         $categoryModel = array_merge($categoryModel);
         foreach ($categoryModel as &$model) {

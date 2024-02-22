@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Apis\CategoryController;
+use App\Http\Controllers\Apis\MenuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +36,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::delete('/delete/{id}', [CategoryController::class, 'destroy']);
     });
     // Menus
+    Route::group(['prefix' => 'menu'], function () {
+        Route::get('/', [MenuController::class, 'index']);
+        Route::post('/add', [MenuController::class, 'store']);
+        Route::post('/edit/{id}', [MenuController::class, 'update']);
+        Route::delete('/destroy', [MenuController::class, 'destroy']);
+    });
 });
