@@ -13,7 +13,7 @@ class MenuSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             DB::table('menus')->insert([
                 'name' => 'Menu ' . $i . ' name',
                 'parent_id' => 0,

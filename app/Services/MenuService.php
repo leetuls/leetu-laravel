@@ -111,16 +111,16 @@ class MenuService
             DB::beginTransaction();
             $errorIds = $this->_checkExist($ids);
             if (count($errorIds)  > 0) {
-                Log::channel('leetu_shop_history')->error('Category No.' . implode(', ', $errorIds) . ' not found!');
-                throw new Exception('Category No.' . implode(', ', $errorIds) . ' not found!');
+                Log::channel('leetu_shop_history')->error('Menu(s) No.' . implode(', ', $errorIds) . ' not found!');
+                throw new Exception('The menu(s) No.' . implode(', ', $errorIds) . ' not found!');
             }
             $this->menuRepository->deleteMultiple($ids);
             $menuOptions = $this->getMenus()->toArray();
             DB::commit();
             return [
                 'error' => false,
-                'categories_options' => $menuOptions['menu_model'],
-                'message' => 'The menus No. ' . implode(', ', $ids) . ' has been deleted successfully!'
+                'menus_options' => $menuOptions['menu_model'],
+                'message' => 'The menu(s) No. ' . implode(', ', $ids) . ' has been deleted successfully!'
             ];
         } catch (CouldNotSaveMenuException $error) {
             DB::rollBack();

@@ -37,7 +37,7 @@ final class MenuData implements Arrayable
         CategoryData::removeKeyCategoriesTree($menuModel);
         array_unshift($menuModel, ['value' => 0, 'label' => 'Danh mục gốc']);
         return new self(
-            self::buildTree($menus->toArray()),
+            ['tree' => self::buildTree($menus->toArray()), 'data' => $menus],
             $menuModel,
             $menuCombine
         );
@@ -54,7 +54,8 @@ final class MenuData implements Arrayable
     {
         $branch = array();
 
-        foreach ($elements as $element) {
+        foreach ($elements as &$element) {
+            $element['key'] = $element['id'];
             if ($element['parent_id'] == $parentId) {
                 $children = self::buildTree($elements, $element['id']);
                 if ($children) {
