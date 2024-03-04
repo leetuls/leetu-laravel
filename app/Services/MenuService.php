@@ -85,11 +85,12 @@ class MenuService
                 'slug' => Str::slug($request->menu_name)
             ];
             $this->menuRepository->update($id, $menuUpdate);
-            $menuOptions = $this->getMenus()->toArray()['menu_model'];
+            $menuOptions = $this->getMenus()->toArray();
             DB::commit();
             return [
                 'error' => false,
-                'menu_options' => $menuOptions,
+                'menus' => $menuOptions['menus'],
+                'menu_options' => $menuOptions['menu_model'],
                 'message' => 'The menu No.' . $id . ' has been updated successfully!'
             ];
         } catch (CouldNotSaveMenuException $error) {
