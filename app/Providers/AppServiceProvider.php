@@ -10,6 +10,8 @@ use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Menu\MenuRepositoryInterface;
 use App\Repositories\Menu\MenuRepository;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Product\ProductRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,7 +23,8 @@ class AppServiceProvider extends ServiceProvider
     public $singletons = [
         UserRepositoryInterface::class => UserRepository::class,
         CategoryRepositoryInterface::class => CategoryRepository::class,
-        MenuRepositoryInterface::class => MenuRepository::class
+        MenuRepositoryInterface::class => MenuRepository::class,
+        ProductRepositoryInterface::class => ProductRepository::class
     ];
 
     /**

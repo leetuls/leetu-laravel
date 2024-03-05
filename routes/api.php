@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Apis\CategoryController;
 use App\Http\Controllers\Apis\MenuController;
+use App\Http\Controllers\Apis\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,5 +42,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/add', [MenuController::class, 'store']);
         Route::post('/edit/{id}', [MenuController::class, 'update']);
         Route::post('/destroy', [MenuController::class, 'destroy']);
+    });
+    // Products
+    Route::group(['prefix' => 'product'], function () {
+        Route::get('/', [ProductController::class, 'index']);
     });
 });

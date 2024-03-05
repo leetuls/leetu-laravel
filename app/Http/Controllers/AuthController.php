@@ -32,12 +32,7 @@ class AuthController extends Controller
         try {
             return response()->json($this->auth->login((string)$request->email, (string)$request->password)->toArray());
         } catch (InvalidCredentialsException $error) {
-            return response()->json(
-                [
-                    'error' => true,
-                    'message' => $error->getMessage()
-                ]
-            );
+            return $this->responseError($error);
         }
     }
 
