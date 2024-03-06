@@ -40,7 +40,7 @@ class ProductSeeder extends Seeder
             // product_images
             DB::table('product_images')->insert([
                 'image' => asset('storage/products/test.jpg'),
-                'product_id' => 'LTS0000' . $i,
+                'product_id' => 'LTS00' . $i,
             ]);
         }
     }
