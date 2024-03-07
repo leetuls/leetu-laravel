@@ -42,6 +42,15 @@ class ProductSeeder extends Seeder
                 'image' => asset('storage/products/test.jpg'),
                 'product_id' => 'LTS00' . $i,
             ]);
+            // product_tags
+            DB::table('product_tags')->insert([
+                'product_id' => 'LTS00' . $i,
+                'tag_id' => $i
+            ]);
+            // tags
+            DB::table('tags')->insert([
+                'name' => 'Áo chất ' . $i
+            ]);
         }
     }
 }

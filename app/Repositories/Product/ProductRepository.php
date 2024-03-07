@@ -32,8 +32,12 @@ class ProductRepository extends EloquentRepository implements ProductRepositoryI
             'products.content',
             'products.branch',
             'categories.name as category_name',
-            $this->_model::raw("GROUP_CONCAT(product_images.id,'_',product_images.image SEPARATOR '|') AS detail_images")
+            $this->_model::raw("GROUP_CONCAT(DISTINCT(product_images.id), '_', product_images.image SEPARATOR ';') AS detail_images"),
+            $this->_model::raw("GROUP_CONCAT(DISTINCT(tags.id), '_', tags.name SEPARATOR ';') AS product_tag"),
         )->join('categories', 'products.category_id', '=', 'categories.id')
-            ->leftJoin('product_images', 'products.product_id', '=', 'product_images.product_id')->groupBy('products.product_id')->orderBy('products.id')->get();
+            ->leftJoin('product_images', 'products.product_id', '=', 'product_images.product_id')
+            ->leftJoin('product_tags', 'products.product_id', '=', 'product_tags.product_id')
+            ->leftJoin('tags', 'product_tags.tag_id', '=', 'tags.id')
+            ->groupBy('products.product_id')->orderBy('products.id')->get();
     }
 }
