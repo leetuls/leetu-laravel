@@ -51,6 +51,7 @@ final class CompositionToken implements Arrayable
         return [
             'error' => false,
             'user' => [
+                'user_id' => $this->user->id,
                 'name' => $this->user->name,
                 'email' => $this->user->email
             ],
