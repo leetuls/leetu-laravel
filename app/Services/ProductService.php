@@ -38,9 +38,8 @@ class ProductService
         $productsData = $this->_prepareProductData($request->products);
 
         // product_images data
-        $productImagesData = $request->product_images;
+        $productImagesData = $this->_prepareProductImages($request->product_images, $id);
         $productImagesRemove = $productImagesData['images_remove'];
-        $productImagesNew = $productImagesData['images_new'];
 
         // product_tags data
         $productTagsData = $request->product_tags;
